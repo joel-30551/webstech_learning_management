@@ -1,0 +1,63 @@
+@import './TeachersPage.css';
+.badge-red {
+  background: #fdecea;
+  color: #c0392b;
+}
+
+
+.action-btn.lock-btn {
+  color: #b8860b;
+}
+.action-btn.lock-btn:hover {
+  background: #fff6e0;
+}
+
+/* Checkbox grid for module permissions in the Add/Edit modal */
+.permission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 16px;
+  margin-top: 6px;
+}
+
+.permission-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.permission-check input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary, #2f6fed);
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  #toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  
+  
+}
+
+@media (max-width: 640px) {
+  .permission-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .permission-grid {
+    grid-template-columns: 1fr;
+  }
+}

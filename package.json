@@ -1,0 +1,7 @@
+{
+  "name": "enosh-college-system",
+  "private": true,
+  "dependencies": {
+    "recharts": "^3.9.2"
+  }
+}
