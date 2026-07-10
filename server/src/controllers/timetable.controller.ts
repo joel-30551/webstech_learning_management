@@ -22,7 +22,8 @@ export const uploadTimetable = async (req: Request, res: Response) => {
           resource_type: 'auto',
           public_id: `${stream}-${term}-${academicYear}-${Date.now()}`.replace(/\s+/g, '_'),
         },
-        (error, result) => (error ? reject(error) : resolve(result))
+        (error: any, result: any) => (error ? reject(error) : resolve(result))
+
       );
       streamifier.createReadStream(req.file!.buffer).pipe(uploadStream);
     });

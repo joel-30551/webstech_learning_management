@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Plus, Pencil, Trash2, X, ChevronDown, BookOpen } from 'lucide-react';
-import './StudentsPage.css';
+import '../../styles/admin/StudentsPage.css';
 
 interface Student {
   _id: string;
@@ -81,7 +81,9 @@ const StudentsPage: React.FC = () => {
     if (filterClass) params.append('class', filterClass);
     if (filterExamType) params.append('examType', filterExamType);
     if (filterGender) params.append('gender', filterGender);
-    const res = await fetch(`/api/students?${params.toString()}`);
+    const res = await fetch(`/api/students?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
     const data = await res.json();
     setStudents(Array.isArray(data) ? data : []);
     setLoading(false);
@@ -91,7 +93,9 @@ const StudentsPage: React.FC = () => {
   // "Linked User" select when creating/editing a student.
   const fetchUsers = useCallback(async () => {
     try {
-      const res = await fetch('/api/user-accounts');
+      const res = await fetch('/api/user-accounts', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       const data = await res.json();
       setUsers(Array.isArray(data) ? data : []);
     } catch {
@@ -144,7 +148,9 @@ const StudentsPage: React.FC = () => {
       // Always fetch the FULL unfiltered list for ID calculation, regardless
       // of any active search/filter on the table, so we always see the true
       // highest existing ID for the current year.
-      const res = await fetch('/api/students');
+      const res = await fetch('/api/students', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       const data = await res.json();
       const allStudents: Student[] = Array.isArray(data) ? data : [];
       setForm(f => ({ ...f, studentId: generateNextStudentId(allStudents) }));
@@ -181,13 +187,31 @@ const StudentsPage: React.FC = () => {
     e.preventDefault();
     setFormError('');
     setFormLoading(true);
+    const names = (form.fullName || '').trim().split(' ');
+    const firstName = names[0] || 'Unknown';
+    const lastName = names.length > 1 ? names.slice(1).join(' ') : 'Name';
+    
+    // Add default values for required fields that aren't on the form but required by backend
+    const payload = { 
+      ...form, 
+      firstName,
+      lastName,
+      email: `${form.studentId.toLowerCase()}@student.enoshcollege.edu`,
+      dateOfBirth: form.dob,
+      classLevel: form.class,
+      program: form.course
+    };
+
     const url = editing ? `/api/students/${editing._id}` : '/api/students';
     const method = editing ? 'PUT' : 'POST';
     try {
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}` 
+        },
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok) { setFormError(data.message || 'Operation failed.'); return; }
@@ -202,7 +226,10 @@ const StudentsPage: React.FC = () => {
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
-    await fetch(`/api/students/${deleteTarget._id}`, { method: 'DELETE' });
+    await fetch(`/api/students/${deleteTarget._id}`, { 
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
     setDeleteTarget(null);
     fetchStudents();
   };

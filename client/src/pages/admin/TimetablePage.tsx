@@ -4,7 +4,7 @@ import {
     Upload, Download, Eye,
 } from 'lucide-react';
 import { toast } from 'react-toastify';
-import './TimetablePage.css';
+import '../../styles/admin/TimeTablePage.css';
 
 interface Timetable {
     _id: string;

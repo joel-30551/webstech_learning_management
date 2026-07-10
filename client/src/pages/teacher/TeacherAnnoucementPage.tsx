@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Search, Megaphone, Calendar, User } from 'lucide-react';
-import './AnnouncementsPage.css';
+import '../../styles/teacher/TeacherAnnoucementPage.css';
 
 interface Announcement {
   _id: string;

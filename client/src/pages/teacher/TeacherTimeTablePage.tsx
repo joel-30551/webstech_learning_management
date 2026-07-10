@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, ChevronDown, FileText, Download, Eye } from 'lucide-react';
-import './TeacherTimeTable.css';
+import '../../styles/teacher/TeacherTimeTable.css';
 
 interface Timetable {
     _id: string;

@@ -3,7 +3,7 @@ import {
   User, Phone, MapPin, Hash, Lock, Eye, EyeOff,
   Edit2, Check, X, AlertCircle, Calendar,
 } from 'lucide-react';
-import './AccountantProfilePage.css';
+import '../../styles/accountant/AccountantProfilePage.css';
 
 interface AccountantProfile {
   _id: string;

@@ -91,7 +91,6 @@ export const createAccountant = async (req: Request, res: Response): Promise<voi
       lastName,
       email,
       phone,
-      subject: 'Accounting',
       qualification,
       employeeId,
       status: status || 'active'

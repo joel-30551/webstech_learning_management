@@ -9,7 +9,7 @@ import {
   Menu,
   X,
 } from 'lucide-react';
-import '../admin/AdminDashboard.css';
+import '../../styles/admin/AdminDashboard.css';
 import TeacherTimetablePage from './TeacherTimeTablePage.tsx';
 import TeacherLearningMaterialsPage from './TeacherLearnMatPage.tsx';
 import TeacherProfilePage from './TeacherProfilePage.tsx';

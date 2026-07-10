@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import Fee from '../models/Fee';
+import Fee from '../models/Fee.model';
+
 
 // POST /api/fees
 export const createFee = async (req: Request, res: Response) => {

@@ -67,7 +67,7 @@ export const createMaterial = async (req: Request, res: Response): Promise<void>
           resource_type: 'auto',
           public_id: `material-${title.toLowerCase().replace(/[^a-z0-9]/g, '_')}-${Date.now()}`,
         },
-        (error, result) => (error ? reject(error) : resolve(result))
+        (error: any, result: any) => (error ? reject(error) : resolve(result))
       );
       streamifier.createReadStream(req.file!.buffer).pipe(uploadStream);
     });
@@ -113,7 +113,7 @@ export const updateMaterial = async (req: Request, res: Response): Promise<void>
             resource_type: 'auto',
             public_id: `material-${(title || material.title).toLowerCase().replace(/[^a-z0-9]/g, '_')}-${Date.now()}`,
           },
-          (error, result) => (error ? reject(error) : resolve(result))
+          (error: any, result: any) => (error ? reject(error) : resolve(result))
         );
         streamifier.createReadStream(req.file!.buffer).pipe(uploadStream);
       });

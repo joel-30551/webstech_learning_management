@@ -3,7 +3,7 @@ import {
     Search, Pencil, Trash2, X, ChevronDown, FileText,
     Upload, Download, Eye, BookOpen,
 } from 'lucide-react';
-import './LearningMaterialsPage.css';
+import '../../styles/admin/LearningMaterialsPage.css';
 
 interface LearningMaterial {
     _id: string;

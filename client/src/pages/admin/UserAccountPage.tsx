@@ -3,7 +3,7 @@ import {
   Search, Plus, Pencil, Trash2, X, ChevronDown, BookOpen,
   Lock, Unlock,
 } from 'lucide-react';
-import './UserAccountsPage.css';
+import '../../styles/admin/UserAccountsPage.css';
 
 type Role = 'admin' | 'teacher' | 'accountant' | 'student';
 

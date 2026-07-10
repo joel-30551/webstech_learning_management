@@ -1,0 +1,379 @@
+@import './TeachersPage.css';
+
+.ann-page {
+  padding: 0;
+}
+
+.announcement-view-message {
+  margin-top: 20px;
+  color: #475569;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* Card action buttons alignment */
+.announcement-card .td-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+
+/* Pin button */
+.announcement-card .pin-btn {
+  width: 32px;
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+
+  background: #ffffff;
+  color: #64748b;
+
+  cursor: pointer;
+
+  transition: all .2s ease;
+}
+
+
+.announcement-card .pin-btn:hover {
+  background: #eef2ff;
+  color: #4f46e5;
+  border-color: #c7d2fe;
+}
+
+
+/* Active pinned state */
+.announcement-card .pin-btn svg {
+  transition: transform .2s ease;
+}
+
+
+.announcement-card .pin-btn:hover svg {
+  transform: translateY(-1px);
+}
+
+
+/* Keep all action buttons same size */
+.announcement-card .action-btn {
+  width: 32px;
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+}
+
+.announcement-card {
+  overflow: visible;
+}
+
+.announcement-card .td-actions {
+  position: relative;
+  z-index: 2;
+}
+/* --- Header --- */
+.ann-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.ann-header h2 { margin: 0 0 4px; font-size: 1.45rem; font-weight: 700; }
+.ann-header p { margin: 0; color: #6b7280; font-size: 0.9rem; }
+
+/* --- Toolbar --- */
+.ann-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* --- Cards Grid --- */
+.ann-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ann-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  transition: box-shadow .15s ease;
+  position: relative;
+}
+.ann-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+
+/* Priority stripe */
+.ann-card.priority-high    { border-left: 4px solid #ef4444; }
+.ann-card.priority-medium  { border-left: 4px solid #f59e0b; }
+.ann-card.priority-low     { border-left: 4px solid #10b981; }
+
+.ann-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.ann-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+.ann-card-meta {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+.ann-card-body {
+  color: #374151;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.ann-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* Audience chips */
+.ann-audience {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.ann-chip {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 500;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+.ann-chip.chip-all       { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+.ann-chip.chip-students  { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+.ann-chip.chip-teachers  { background: #fefce8; color: #ca8a04; border-color: #fde68a; }
+.ann-chip.chip-stream    { background: #fdf2f8; color: #9333ea; border-color: #e9d5ff; }
+
+.ann-actions { margin-left: auto; display: flex; gap: 6px; }
+
+/* Priority badge */
+.badge-priority {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.badge-high   { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.badge-medium { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.badge-low    { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+/* Archive badge */
+.badge-archived { background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db; font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; font-weight: 500; }
+
+/* Read / Unread dot */
+.unread-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #3b82f6;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* Empty state */
+.ann-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+/* --- Modal form overrides --- */
+.ann-modal-body { padding: 0; }
+
+.ann-target-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ann-target-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: #374151;
+  background: #fff;
+  transition: all .15s;
+  user-select: none;
+}
+.ann-target-chip:hover { border-color: #3b82f6; color: #3b82f6; }
+.ann-target-chip.selected { border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; }
+.ann-target-chip input { display: none; }
+
+/* Textarea */
+.modal-form textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color .15s;
+}
+.modal-form textarea:focus { border-color: #3b82f6; }
+
+
+@media (max-width: 600px) {
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* Announcement cards */
+  .announcement-card {
+    flex-direction: column;
+    padding: 16px;
+    gap: 14px;
+  }
+
+
+  .announcement-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+
+  .announcement-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+
+  .announcement-top h4 {
+    font-size: 1rem;
+  }
+
+
+  .announcement-message {
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+
+
+  .announcement-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+
+  /* Card actions */
+  .announcement-card .td-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+
+  .announcement-card .action-btn,
+  .announcement-card .pin-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+
+
+  /* Toolbar */
+  .mgmt-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+
+  .search-box {
+    width: 100%;
+  }
+
+
+  #filter {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+
+  .filter-select {
+    max-width: 100%;
+    width: 100%;
+  }
+
+
+  .filter-select select {
+    width: 100%;
+  }
+
+}
+
+
+
+@media (max-width: 640px) {
+
+  .permission-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .modal-box {
+    width: calc(100% - 32px);
+    margin: 16px;
+  }
+
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+
+  .modal-actions button {
+    width: 100%;
+  }
+
+}

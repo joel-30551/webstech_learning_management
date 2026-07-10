@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, ChevronDown, FileText, Download, Eye } from 'lucide-react';
-import './StudentLearnMat.css';
+import '../../styles/student/StudentLearnMat.css';
 
 interface LearningMaterial {
   _id: string;

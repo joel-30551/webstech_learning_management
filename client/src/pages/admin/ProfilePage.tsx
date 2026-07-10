@@ -3,7 +3,7 @@ import {
   User, Phone, Shield, Lock, LogOut, Eye, EyeOff,
   Edit2, Check, X, AlertCircle, Calendar,
 } from 'lucide-react';
-import './ProfilePage.css';
+import '../../styles/admin/ProfilePage.css';
 
 interface AdminProfile {
   _id: string;

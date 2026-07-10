@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   Search, Plus, Pencil, Trash2, X, ChevronDown, BookOpen, Wallet,
 } from 'lucide-react';
-import './AccountsPage.css';
+import "../../styles/accountant/AccountsPage.css"
+
 
 type Term = 'First Term' | 'Second Term' | 'Third Term';
 type FeeStatus = 'paid' | 'partial' | 'unpaid';

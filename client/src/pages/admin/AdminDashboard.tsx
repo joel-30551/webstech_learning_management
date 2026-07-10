@@ -16,7 +16,7 @@ import {
   X,
   ArrowUpRight,
 } from 'lucide-react';
-import './AdminDashboard.css';
+import '../../styles/admin/AdminDashboard.css';
 import TeachersPage from './TeachersPage';
 import StudentsPage from './StudentsPage';
 import AccountantsPage from './AccountantsPage.tsx';

@@ -1,0 +1,75 @@
+@import "../admin/LearningMaterialsPage.css";
+
+.title-icon {
+  vertical-align: text-bottom;
+  margin-right: 4px;
+  opacity: 0.7;
+}
+
+.file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: #555;
+  background: #f2f4f7;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.field-hint {
+  font-size: 0.78rem;
+  color: #888;
+  margin-top: 4px;
+}
+
+.file-drop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 1px dashed #cfd4dc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fafbfc;
+}
+
+.file-drop input[type='file'] {
+  flex: 1;
+  min-width: 180px;
+  font-size: 0.85rem;
+}
+
+.file-drop-name {
+  font-size: 0.82rem;
+  color: #2f6fed;
+  font-weight: 500;
+}
+
+.file-drop-existing {
+  color: #666;
+  font-weight: 400;
+}
+
+.upload-progress {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: #eef1f5;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.upload-progress-bar {
+  height: 100%;
+  background: var(--primary, #2f6fed);
+  transition: width 0.15s ease;
+}
+
+.upload-progress span {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  font-size: 0.72rem;
+  color: #888;
+}

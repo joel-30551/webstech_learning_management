@@ -4,7 +4,7 @@ import {
   Users, GraduationCap, UserCog, Calendar, FileText, KeyRound,
   Database, Eye, Settings,
 } from 'lucide-react';
-import './SettingsPage.css';
+import '../../styles/admin/SettingsPage.css';
 
 type SectionKey = 'manual' | 'privacy' | 'security';
 

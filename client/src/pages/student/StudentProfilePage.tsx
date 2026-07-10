@@ -3,7 +3,7 @@ import {
   User, Phone, Hash, Lock, Eye, EyeOff,
   Check, X, Calendar, Mail, GraduationCap
 } from 'lucide-react';
-import './StudentProfilePage.css';
+import '../../styles/student/StudentProfilePage.css';
 
 interface StudentProfile {
   _id: string;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Plus, Pencil, Trash2, X, BookOpen } from 'lucide-react';
-import './AccountantsPage.css';
+import '../../styles/admin/AccountantsPage.css';
 
 interface Accountant {
   _id: string;
@@ -83,7 +83,9 @@ const AccountantsPage: React.FC = () => {
     const params = new URLSearchParams();
     if (search) params.append('search', search);
 
-    const res = await fetch(`/api/accountants?${params.toString()}`);
+    const res = await fetch(`/api/accountants?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
     const data = await res.json();
 
     setAccountants(Array.isArray(data) ? data : []);
@@ -94,7 +96,9 @@ const AccountantsPage: React.FC = () => {
   // "Linked User" select when creating/editing an accountant.
   const fetchUsers = useCallback(async () => {
     try {
-      const res = await fetch('/api/usersaccount');
+      const res = await fetch('/api/user-accounts', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       const data = await res.json();
       setUsers(Array.isArray(data) ? data : []);
     } catch {
@@ -127,7 +131,9 @@ const AccountantsPage: React.FC = () => {
       // Always fetch the FULL unfiltered list for ID calculation, regardless
       // of any active search filter on the table, so we always see the true
       // highest existing Accountant ID for the current year.
-      const res = await fetch('/api/accountants');
+      const res = await fetch('/api/accountants', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       const data = await res.json();
       const allAccountants: Accountant[] = Array.isArray(data) ? data : [];
       setForm(f => ({ ...f, accountantId: generateNextAccountantId(allAccountants) }));
@@ -159,7 +165,19 @@ const AccountantsPage: React.FC = () => {
     setFormLoading(true);
     setFormError('');
 
-    const payload = { ...form };
+    const names = (form.fullName || '').trim().split(' ');
+    const firstName = names[0] || 'Unknown';
+    const lastName = names.length > 1 ? names.slice(1).join(' ') : 'Name';
+
+    // Add default values for required fields that aren't on the form
+    const payload = {
+      ...form,
+      firstName,
+      lastName,
+      email: `${form.accountantId.toLowerCase()}@enoshcollege.edu`,
+      employeeId: form.accountantId,
+      status: 'active'
+    };
 
     const url = editing
       ? `/api/accountants/${editing._id}`
@@ -170,7 +188,10 @@ const AccountantsPage: React.FC = () => {
     try {
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
         body: JSON.stringify(payload),
       });
 
@@ -195,6 +216,7 @@ const AccountantsPage: React.FC = () => {
 
     await fetch(`/api/accountants/${deleteTarget._id}`, {
       method: 'DELETE',
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     });
 
     setDeleteTarget(null);

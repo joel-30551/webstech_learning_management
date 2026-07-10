@@ -3,7 +3,7 @@ import {
   User, Phone, MapPin, Hash, BookOpen, Lock, Eye, EyeOff,
   Edit2, Check, X, AlertCircle, Calendar,
 } from 'lucide-react';
-import './TeacherProfilePage.css';
+import '../../styles/teacher/TeacherProfilePage.css';
 
 interface TeacherProfile {
   _id: string;

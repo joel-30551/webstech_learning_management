@@ -9,7 +9,7 @@ import {
   Menu,
   X,
 } from 'lucide-react';
-import '../admin/AdminDashboard.css';
+import '../../styles/accountant/AccountantdashboardPage.css';
 import AccountsPage from './AccountsPage.tsx';
 import AccountantAnnouncementsPage from './AccountantAnnoucementsPage.tsx';
 import AccountantProfilePage from './AccountantProfilePage.tsx';

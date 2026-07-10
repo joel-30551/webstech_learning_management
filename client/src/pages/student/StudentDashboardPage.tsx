@@ -11,7 +11,7 @@ import {
   Menu,
   X,
 } from 'lucide-react';
-import '../admin/AdminDashboard.css';
+import '../../styles/student/StudentDashboardPage.css';
 import StudentTimetablePage from './StudentTimetablePage.tsx';
 import StudentLearningMaterialsPage from './StudentLearnMat.tsx';
 import StudentAccountPage from './StudentAccountPage.tsx';

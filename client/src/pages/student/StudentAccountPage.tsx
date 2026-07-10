@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Wallet, AlertCircle, CheckCircle2, Clock, XCircle, Calendar } from 'lucide-react';
-import './StudentAccountPage.css';
+import '../../styles/student/StudentAccountPage.css';
 
 type FeeStatus = 'paid' | 'partial' | 'unpaid';
 

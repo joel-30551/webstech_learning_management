@@ -36,7 +36,7 @@ const FeeSchema = new Schema<IFee>(
 );
 
 // Keep balance/status in sync whenever amountPaid or totalFee changes
-FeeSchema.pre('save', function (next) {
+FeeSchema.pre('save', async function () {
   this.balance = this.totalFee - this.amountPaid;
 
   if (this.amountPaid <= 0) {
@@ -47,9 +47,8 @@ FeeSchema.pre('save', function (next) {
   } else {
     this.status = 'partial';
   }
-
-  next();
 });
+
 
 FeeSchema.index({ studentId: 1, term: 1, academicYear: 1 }, { unique: true });
 FeeSchema.index({ class: 1, term: 1, academicYear: 1 });
