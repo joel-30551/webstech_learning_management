@@ -60,7 +60,17 @@ export const getStudentById = async (req: Request, res: Response): Promise<void>
 // POST create student
 export const createStudent = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { firstName, lastName, email, phone, studentId, classLevel, program, gender, dateOfBirth, guardianName, guardianPhone, status } = req.body;
+    const {
+      firstName, lastName, email, phone, studentId,
+      classLevel: classLevelRaw, class: classAlias,
+      program: programRaw, course: courseAlias,
+      gender,
+      dateOfBirth: dobRaw, dob: dobAlias,
+      guardianName, guardianPhone, status
+    } = req.body;
+    const classLevel = classLevelRaw || classAlias;
+    const program    = programRaw    || courseAlias || '';
+    const dateOfBirth = dobRaw       || dobAlias;
     if (!firstName || !lastName || !email || !studentId || !classLevel || !gender || !dateOfBirth) {
       res.status(400).json({ message: 'First name, last name, email, student ID, class level, gender, and date of birth are required.' });
       return;

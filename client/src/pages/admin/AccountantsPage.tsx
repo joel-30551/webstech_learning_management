@@ -170,7 +170,7 @@ const AccountantsPage: React.FC = () => {
     const lastName = names.length > 1 ? names.slice(1).join(' ') : 'Name';
 
     // Add default values for required fields that aren't on the form
-    const payload = {
+    const payload: Record<string, unknown> = {
       ...form,
       firstName,
       lastName,
@@ -178,6 +178,8 @@ const AccountantsPage: React.FC = () => {
       employeeId: form.accountantId,
       status: 'active'
     };
+    // Remove userId if empty to avoid Mongoose CastError on empty string
+    if (!payload.userId) delete payload.userId;
 
     const url = editing
       ? `/api/accountants/${editing._id}`
@@ -337,7 +339,6 @@ const AccountantsPage: React.FC = () => {
               <div className="form-group">
                 <label>Linked User Account</label>
                 <select
-                  required
                   value={form.userId}
                   onChange={e => setForm({ ...form, userId: e.target.value })}
                 >

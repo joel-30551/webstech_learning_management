@@ -1,4 +1,4 @@
-@import "../admin/LearningMaterialsPage.css";
+@import "../../styles/admin/AdminDashboard.css"; 
 
 .title-icon {
   vertical-align: text-bottom;

@@ -1,8 +1,11 @@
 :root {
-  --navy-900: #141B31;
-  --navy-800: #1C2745;
-  --navy-700: #263258;
-  --gold-500: #60A5FA;
+  --background-main: #4d9af9;
+  --background-sub: #1f81f9;
+  --color-main: #ffffff;
+  --color-sub: #f7f7f7;
+  --color-plain: #fffff8;
+
+
   --gold-100: #FBF1DE;
   --ocean-500: #5291d6;
   --ocean-100: #E7EEF6;
@@ -14,19 +17,23 @@
   --bg: #F3F4F7;
   --surface: #FFFFFF;
   --border: #E5E7EE;
-  --text: #10141e;
+  --text-main: #000714ec;
   --text-muted: #797d86;
-  --text-faint: #9AA1AE;
+  --text-unmuted: #1f2937;
+  --text-faint: #32353a;
+  --text-deepfaint: #555e6d;
 
   --font-display: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif;
 
-  --radius-sm: 3px;
+  --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
+
   --sidebar-w: 260px;
   --topbar-h: 60px;
 }
+
 .mgmt-page {
   display: flex;
   flex-direction: column;
@@ -46,7 +53,7 @@
 .mgmt-header h2 {
   font-size: 22px;
   font-weight: 700;
-  color: var(--navy-900);
+  color: var(--text-main);
   margin-bottom: 4px;
 }
 
@@ -60,8 +67,8 @@
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  background: var(--gold-500);
-  color: #f7f7f7;
+  background: var(--background-main);
+  color: #ffffff;
   border: none;
   border-radius: 6px;
   font-size: 14px;
@@ -69,12 +76,14 @@
   font-family: inherit;
   cursor: pointer;
   white-space: nowrap;
-  transition: linear .15s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
 }
 
 .btn-add:hover {
-  background: var(--ocean-500);
+  background: var(--background-sub);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(31, 129, 249, 0.25);
 }
 
 
@@ -211,7 +220,7 @@
 
 .td-name {
   font-weight: 600;
-  color: #111827 ;
+  color: #111827;
 }
 
 .capitalize {
@@ -432,10 +441,9 @@
   background: #8e3b2c8f;
 }
 
-#btn{
-  background-color: var(--navy-900);
+#btn {
+  background-color: var(--background-main);
 }
-
 
 .btn-submit {
   width: 50%;
@@ -447,12 +455,13 @@
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition:  0.15s;
-  animation: linear;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-submit:hover:not(:disabled) {
-  background:#111827d7 ;
+  background: var(--background-sub);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(31, 129, 249, 0.25);
 }
 
 .btn-submit:disabled {
@@ -524,13 +533,13 @@
     grid-template-columns: 1fr;
   }
 
-  .mgmt-header{
+  .mgmt-header {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
   }
 
-  .mgmt-header div p{
+  .mgmt-header div p {
     font-size: 12px;
   }
 
@@ -546,35 +555,35 @@
   }
 
   .mgmt-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 10px;
-  min-width: 340px;
-}
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    min-width: 340px;
+  }
 
-.mgmt-table thead {
-  background: #f9fafb;
-  border-bottom: 1px solid #d9e1ef;
-}
+  .mgmt-table thead {
+    background: #f9fafb;
+    border-bottom: 1px solid #d9e1ef;
+  }
 
-.mgmt-table th {
-  text-align: left;
-  padding: 12px 16px;
-  font-size: 8px;
-  font-weight: 300;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  white-space: nowrap;
-}
+  .mgmt-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 8px;
+    font-weight: 300;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+  }
 
-.mgmt-table td {
-  padding: 13px 16px;
-  color: #374151;
-  text-transform: capitalize;
-  border-bottom: 1px solid #f3f4f6;
-  vertical-align: middle;
-}
+  .mgmt-table td {
+    padding: 13px 16px;
+    color: #374151;
+    text-transform: capitalize;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+  }
 
 
 }

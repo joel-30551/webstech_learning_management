@@ -36,7 +36,7 @@ const Login: React.FC = () => {
 
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
-        setError('Cannot connect to server.Please try again.');
+        setError('Network Error.Cannot connect to server.');
         return;
       }
 
@@ -160,7 +160,7 @@ const Login: React.FC = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
+                placeholder="username"
                 required
               />
             </div>
@@ -173,7 +173,7 @@ const Login: React.FC = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
+                  placeholder="password"
                   required
                 />
                 <button
@@ -199,7 +199,7 @@ const Login: React.FC = () => {
             </div>
 
             <button type="submit" disabled={isLoading} className="login-button">
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? '...' : 'Login'}
             </button>
           </form>
 
@@ -216,7 +216,7 @@ const Login: React.FC = () => {
               <GraduationCap size={44} className="logo-svg" />
             </div>
             <h2>Enosh College</h2>
-            <span className="system-tag">College Management Portal</span>
+            <span className="system-tag">School Management Portal</span>
           </div>
 
           <div className="welcome-section">

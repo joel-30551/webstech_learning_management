@@ -4,12 +4,13 @@ import Announcement from '../models/Announcement.model';
 // GET all announcements
 export const getAnnouncements = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { search, priority, status } = req.query;
+    const { search, priority, status, targetAudience } = req.query;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const filter: any = {};
 
     if (priority) filter.priority = priority;
     if (status) filter.status = status;
+    if (targetAudience) filter.targetAudience = targetAudience;
     if (search) {
       filter.$or = [
         { title:   { $regex: search, $options: 'i' } },

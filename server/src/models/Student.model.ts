@@ -16,6 +16,10 @@ export interface IStudent extends Document {
   status: 'active' | 'inactive' | 'graduated';
   createdAt?: Date;
   updatedAt?: Date;
+  fullName?: string;
+  class?: string;
+  course?: string;
+  dob?: string;
 }
 
 const StudentSchema = new Schema<IStudent>(
@@ -34,8 +38,28 @@ const StudentSchema = new Schema<IStudent>(
     guardianPhone: { type: String, default: '' },
     status:        { type: String, enum: ['active', 'inactive', 'graduated'], default: 'active' },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+// Virtual: fullName
+StudentSchema.virtual('fullName').get(function (this: IStudent) {
+  return `${this.firstName} ${this.lastName}`.trim();
+});
+
+// Virtual: class (alias for classLevel — used by the frontend)
+StudentSchema.virtual('class').get(function (this: IStudent) {
+  return this.classLevel;
+});
+
+// Virtual: course (alias for program — used by the frontend)
+StudentSchema.virtual('course').get(function (this: IStudent) {
+  return this.program;
+});
+
+// Virtual: dob (ISO string of dateOfBirth — used by the frontend's date input)
+StudentSchema.virtual('dob').get(function (this: IStudent) {
+  return this.dateOfBirth ? this.dateOfBirth.toISOString().slice(0, 10) : '';
+});
 
 const Student = mongoose.model<IStudent>('Student', StudentSchema);
 export default Student;

@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import authRoutes from './routes/auth.routes';
 import teacherRoutes from './routes/teacher.routes';
 import studentRoutes from './routes/student.routes';
@@ -11,8 +12,7 @@ import feeRoutes from './routes/fee.routes';
 import materialRoutes from './routes/learningmaterial.routes';
 import timetableRoutes from './routes/timetable.routes';
 import profileRoutes from './routes/profile.routes';
-
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
 

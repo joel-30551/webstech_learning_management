@@ -15,6 +15,9 @@ import {
   Menu,
   X,
   ArrowUpRight,
+  BarChart3,
+  Star,
+  Activity,
 } from 'lucide-react';
 import '../../styles/admin/AdminDashboard.css';
 import TeachersPage from './TeachersPage';
@@ -63,10 +66,25 @@ interface RecentActivity {
   details?: string;
 }
 
+interface EngagementPoint {
+  label: string;
+  value: number;
+}
+
+interface ReviewItem {
+  _id: string;
+  author: string;
+  role: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
+  const [statsLoading, setStatsLoading] = useState(true);
 
   const [stats, setStats] = useState<DashboardStats>({
     totalStudents: 0,
@@ -84,18 +102,20 @@ const AdminDashboard: React.FC = () => {
   });
 
   const [recentActivities, setRecentActivities] = useState<RecentActivity[]>([]);
-  const [statsLoading, setStatsLoading] = useState(true);
+  const [engagement, setEngagement] = useState<EngagementPoint[]>([]);
+  const [engagementLoading, setEngagementLoading] = useState(true);
+  const [reviews, setReviews] = useState<ReviewItem[]>([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
 
   const userRaw = localStorage.getItem('user');
   const user = userRaw ? JSON.parse(userRaw) : { username: 'Admin', role: 'admin' };
+  const authHeader = { Authorization: `Bearer ${localStorage.getItem('token')}` };
 
   useEffect(() => {
     const fetchStats = async () => {
       setStatsLoading(true);
       try {
-        const res = await fetch('/api/dashboard/stats', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        const res = await fetch('/api/dashboard/stats', { headers: authHeader });
         if (res.ok) setStats(await res.json());
       } catch (err) {
         console.error('Failed to fetch stats:', err);
@@ -106,9 +126,7 @@ const AdminDashboard: React.FC = () => {
 
     const fetchActivities = async () => {
       try {
-        const res = await fetch('/api/dashboard/recent-activities?limit=5', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        const res = await fetch('/api/dashboard/recent-activities?limit=5', { headers: authHeader });
         if (res.ok) {
           const data = await res.json();
           setRecentActivities(Array.isArray(data) ? data : []);
@@ -118,24 +136,55 @@ const AdminDashboard: React.FC = () => {
       }
     };
 
+    const fetchEngagement = async () => {
+      setEngagementLoading(true);
+      try {
+        const res = await fetch('/api/dashboard/weekly-engagement', { headers: authHeader });
+        if (res.ok) {
+          const data = await res.json();
+          setEngagement(Array.isArray(data) ? data : []);
+        }
+      } catch (err) {
+        console.error('Failed to fetch engagement data:', err);
+      } finally {
+        setEngagementLoading(false);
+      }
+    };
+
+    const fetchReviews = async () => {
+      setReviewsLoading(true);
+      try {
+        const res = await fetch('/api/dashboard/reviews?limit=2', { headers: authHeader });
+        if (res.ok) {
+          const data = await res.json();
+          setReviews(Array.isArray(data) ? data : []);
+        }
+      } catch (err) {
+        console.error('Failed to fetch reviews:', err);
+      } finally {
+        setReviewsLoading(false);
+      }
+    };
+
     fetchStats();
     fetchActivities();
+    fetchEngagement();
+    fetchReviews();
 
     const statsInterval = setInterval(fetchStats, 30000);
     const activitiesInterval = setInterval(fetchActivities, 30000);
+    const engagementInterval = setInterval(fetchEngagement, 60000);
 
     return () => {
       clearInterval(statsInterval);
       clearInterval(activitiesInterval);
+      clearInterval(engagementInterval);
     };
   }, []);
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      await fetch('/api/auth/logout', { method: 'POST', headers: authHeader });
     } catch (_) {
       // Ignore network errors on logout
     } finally {
@@ -174,45 +223,19 @@ const AdminDashboard: React.FC = () => {
     return typeMap[type] || type;
   };
 
-  // Compact stat definition — kept to 4 essentials for the primary row.
   const statCards = [
-    {
-      key: 'students',
-      label: 'Students',
-      value: stats.totalStudents,
-      delta: stats.newStudentsThisTerm,
-      deltaLabel: 'this term',
-      icon: <Users size={20} />,
-      tone: 'ocean',
-    },
-    {
-      key: 'teachers',
-      label: 'Teachers',
-      value: stats.totalTeachers,
-      delta: stats.newTeachersThisTerm,
-      deltaLabel: 'new staff',
-      icon: <GraduationCap size={20} />,
-      tone: 'gold',
-    },
-    {
-      key: 'materials',
-      label: 'Materials',
-      value: stats.learningMaterials,
-      delta: stats.materialsThisWeek,
-      deltaLabel: 'this week',
-      icon: <BookOpen size={20} />,
-      tone: 'moss',
-    },
-    {
-      key: 'announcements',
-      label: 'Announcements',
-      value: stats.announcements,
-      delta: stats.pinnedAnnouncements,
-      deltaLabel: 'pinned',
-      icon: <Megaphone size={20} />,
-      tone: 'clay',
-    },
+    { key: 'students', label: 'Students', value: stats.totalStudents, delta: stats.newStudentsThisTerm, deltaLabel: 'this term', icon: <Users size={20} />, tone: 'ocean' },
+    { key: 'teachers', label: 'Teachers', value: stats.totalTeachers, delta: stats.newTeachersThisTerm, deltaLabel: 'new staff', icon: <GraduationCap size={20} />, tone: 'gold' },
+    { key: 'materials', label: 'Materials', value: stats.learningMaterials, delta: stats.materialsThisWeek, deltaLabel: 'this week', icon: <BookOpen size={20} />, tone: 'moss' },
+    { key: 'announcements', label: 'Announcements', value: stats.announcements, delta: stats.pinnedAnnouncements, deltaLabel: 'pinned', icon: <Megaphone size={20} />, tone: 'clay' },
   ];
+
+  // Bar heights are derived from whatever the API returns — never fixed numbers.
+  const maxEngagement = Math.max(1, ...engagement.map(e => e.value));
+  const peakLabel = engagement.reduce(
+    (peak, point) => (point.value > peak.value ? point : peak),
+    { label: '', value: -Infinity }
+  ).label;
 
   return (
     <div className="dash-layout">
@@ -268,6 +291,7 @@ const AdminDashboard: React.FC = () => {
                 <p className="dash-sub">Here's what's happening at Enosh College today.</p>
               </div>
 
+              {/* Stats Row */}
               <div className="stats-grid">
                 {statCards.map((card) => (
                   <div key={card.key} className={`stat-card tone-${card.tone}`}>
@@ -286,63 +310,147 @@ const AdminDashboard: React.FC = () => {
                 ))}
               </div>
 
+              {/* Layout Panels: analytics + activity, status + reviews */}
               <div className="dash-panels">
-                <div className="panel activities-panel">
-                  <div className="panel-header">
-                    <h3>Recent Activity</h3>
-                    <a href="#" className="panel-link">View all</a>
+                <div className="panel-column main-column">
+
+                  {/* Weekly engagement — bar heights computed from fetched values */}
+                  <div className="panel analytics-panel">
+                    <div className="panel-header">
+                      <div className="header-title-pack">
+                        <BarChart3 size={18} className="icon-moss" />
+                        <h3>Weekly Resource Engagement</h3>
+                      </div>
+                      <span className="live-badge">Live</span>
+                    </div>
+
+                    <div className="analytics-chart-container">
+                      {engagementLoading ? (
+                        <div className="chart-bar-group">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <div className="bar-wrapper" key={i}>
+                              <div className="bar bar-skeleton" />
+                              <span className="bar-lbl">&nbsp;</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : engagement.length === 0 ? (
+                        <p className="empty-state">No engagement data yet this week.</p>
+                      ) : (
+                        <div className="chart-bar-group">
+                          {engagement.map((point) => {
+                            const heightPercent = Math.round((point.value / maxEngagement) * 100);
+                            const isPeak = point.label === peakLabel;
+                            return (
+                              <div className="bar-wrapper" key={point.label}>
+                                <div
+                                  className={`bar ${isPeak ? 'bar-peak' : 'bar-standard'}`}
+                                  style={{ height: `${heightPercent}%` }}
+                                  title={`${point.label}: ${point.value}`}
+                                />
+                                <span className="bar-lbl">{point.label}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="activities-list">
-                    {recentActivities.length === 0 ? (
-                      <p className="empty-state">Nothing new yet — check back later.</p>
-                    ) : (
-                      recentActivities.slice(0, 5).map((activity) => (
-                        <div key={activity._id} className="activity-row">
-                          <span className={`activity-dot dot-${activity.type}`} />
-                          <div className="activity-copy">
-                            <p className="activity-text">
-                              <strong>{activity.actor}</strong> {formatActivityType(activity.type)}{' '}
-                              <strong>{activity.resource}</strong>
-                            </p>
-                            <p className="activity-time">
-                              {new Date(activity.timestamp).toLocaleString(undefined, {
-                                month: 'short',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              })}
-                            </p>
+                  {/* Recent Activity */}
+                  <div className="panel activities-panel">
+                    <div className="panel-header">
+                      <div className="header-title-pack">
+                        <Activity size={18} className="icon-clay" />
+                        <h3>Recent Activity</h3>
+                      </div>
+                      <a href="#" className="panel-link">View all</a>
+                    </div>
+
+                    <div className="activities-list">
+                      {recentActivities.length === 0 ? (
+                        <p className="empty-state">Nothing new yet — check back later.</p>
+                      ) : (
+                        recentActivities.slice(0, 4).map((activity) => (
+                          <div key={activity._id} className="activity-row">
+                            <span className={`activity-dot dot-${activity.type}`} />
+                            <div className="activity-copy">
+                              <p className="activity-text">
+                                <strong>{activity.actor}</strong> {formatActivityType(activity.type)}{' '}
+                                <strong>{activity.resource}</strong>
+                              </p>
+                              <p className="activity-time">
+                                {new Date(activity.timestamp).toLocaleString(undefined, {
+                                  month: 'short',
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit',
+                                })}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))
-                    )}
+                        ))
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                <div className="panel status-panel">
-                  <div className="panel-header">
-                    <h3>System</h3>
+                <div className="panel-column side-column">
+
+                  {/* System Status */}
+                  <div className="panel status-panel">
+                    <div className="panel-header">
+                      <h3>System</h3>
+                    </div>
+                    <div className="status-rows">
+                      <div className="status-row">
+                        <span className="status-key">Admin users</span>
+                        <span className="status-val">{statsLoading ? '—' : stats.totalAdmins}</span>
+                      </div>
+                      <div className="status-row">
+                        <span className="status-key">Online now</span>
+                        <span className="status-val">
+                          <span className="status-pulse" />
+                          {statsLoading ? '—' : stats.onlineUsers}
+                        </span>
+                      </div>
+                      <div className="status-row">
+                        <span className="status-key">Finance staff</span>
+                        <span className="status-val">{statsLoading ? '—' : stats.totalAccountants}</span>
+                      </div>
+                      <div className="status-row">
+                        <span className="status-key">Timetables live</span>
+                        <span className="status-val">{statsLoading ? '—' : stats.timetables}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="status-rows">
-                    <div className="status-row">
-                      <span className="status-key">Admin users</span>
-                      <span className="status-val">{statsLoading ? '—' : stats.totalAdmins}</span>
+
+                  {/* Campus Feedback — fetched, not mocked */}
+                  <div className="panel reviews-panel">
+                    <div className="panel-header">
+                      <h3>Campus Feedback</h3>
                     </div>
-                    <div className="status-row">
-                      <span className="status-key">Online now</span>
-                      <span className="status-val">
-                        <span className="status-pulse" />
-                        {statsLoading ? '—' : stats.onlineUsers}
-                      </span>
-                    </div>
-                    <div className="status-row">
-                      <span className="status-key">Finance staff</span>
-                      <span className="status-val">{statsLoading ? '—' : stats.totalAccountants}</span>
-                    </div>
-                    <div className="status-row">
-                      <span className="status-key">Timetables live</span>
-                      <span className="status-val">{statsLoading ? '—' : stats.timetables}</span>
+                    <div className="reviews-list">
+                      {reviewsLoading ? (
+                        <p className="empty-state">Loading feedback…</p>
+                      ) : reviews.length === 0 ? (
+                        <p className="empty-state">No feedback submitted yet.</p>
+                      ) : (
+                        reviews.map((rev) => (
+                          <div key={rev._id} className="review-card">
+                            <div className="review-meta">
+                              <span className="review-author">{rev.author}</span>
+                              <span className="review-role">{rev.role}</span>
+                            </div>
+                            <div className="review-stars" aria-label={`${rev.rating} out of 5 stars`}>
+                              {Array.from({ length: rev.rating }).map((_, i) => (
+                                <Star key={i} size={12} className="star-icon" />
+                              ))}
+                            </div>
+                            <p className="review-text">{rev.comment}</p>
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>

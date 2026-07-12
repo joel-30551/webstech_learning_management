@@ -86,7 +86,7 @@ export const createAccountant = async (req: Request, res: Response): Promise<voi
     await newUser.save();
 
     const accountant = await Accountant.create({
-      userId: newUser._id,
+      ...(newUser ? { userId: newUser._id } : {}),
       firstName,
       lastName,
       email,

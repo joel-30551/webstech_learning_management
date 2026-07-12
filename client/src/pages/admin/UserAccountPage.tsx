@@ -72,7 +72,9 @@ const UserAccountPage: React.FC = () => {
     if (filterActive) params.append('isActive', filterActive);
 
     try {
-      const res = await fetch(`/api/user-accounts?${params.toString()}`);
+      const res = await fetch(`/api/user-accounts?${params.toString()}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
       const data = await res.json();
       setAccounts(Array.isArray(data) ? data : []);
@@ -133,7 +135,10 @@ const UserAccountPage: React.FC = () => {
     try {
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
         body: JSON.stringify(payload),
       });
       const data = await res.json();
@@ -149,7 +154,10 @@ const UserAccountPage: React.FC = () => {
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
-    await fetch(`/api/user-accounts/${deleteTarget._id}`, { method: 'DELETE' });
+    await fetch(`/api/user-accounts/${deleteTarget._id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
     setDeleteTarget(null);
     fetchAccounts();
   };
@@ -161,7 +169,10 @@ const UserAccountPage: React.FC = () => {
     try {
       await fetch(`/api/user-accounts/${lockTarget._id}/status`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
         body: JSON.stringify({ isActive: nextActive }),
       });
       setLockTarget(null);

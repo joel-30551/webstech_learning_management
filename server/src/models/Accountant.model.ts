@@ -11,6 +11,8 @@ export interface IAccountant extends Document {
   status: 'active' | 'inactive';
   createdAt?: Date;
   updatedAt?: Date;
+  fullName?: string;
+  accountantId?: string;
 }
 
 const AccountantSchema = new Schema<IAccountant>(
@@ -24,8 +26,18 @@ const AccountantSchema = new Schema<IAccountant>(
     employeeId:      { type: String, required: true, unique: true, trim: true },
     status:          { type: String, enum: ['active', 'inactive'], default: 'active' },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+// Virtual: fullName
+AccountantSchema.virtual('fullName').get(function (this: IAccountant) {
+  return `${this.firstName} ${this.lastName}`.trim();
+});
+
+// Virtual: accountantId (alias for employeeId — used by the frontend)
+AccountantSchema.virtual('accountantId').get(function (this: IAccountant) {
+  return this.employeeId;
+});
 
 const Accountant = mongoose.model<IAccountant>('Accountant', AccountantSchema);
 export default Accountant;

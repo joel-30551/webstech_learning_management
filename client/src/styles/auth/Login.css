@@ -1,3 +1,39 @@
+:root {
+  --background-main:#4d9af9 ;
+  --background-sub: #1f81f9;
+  --color-main:#ffffff;
+  --color-sub:#f7f7f7;
+  --color-plain: #fffff8;
+
+ 
+  --gold-100: #FBF1DE;
+  --ocean-500: #5291d6;
+  --ocean-100: #E7EEF6;
+  --moss-500: #65b683;
+  --moss-100: #f5faf7;
+  --clay-500: #d36d50;
+  --clay-100: #F6E7E2;
+
+  --bg: #F3F4F7;
+  --surface: #FFFFFF;
+  --border: #E5E7EE;
+  --text-main: #000714ec;
+  --text-muted: #797d86;
+  --text-unmuted: #1f2937;
+  --text-faint: #32353a;
+  --text-deepfaint: #555e6d;
+
+  --font-display: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --sidebar-w: 260px;
+  --topbar-h: 60px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f7f7f7;
+  background-color: var(--color-plain);
   font-family: 'Outfit', Inter, sans-serif;
   padding: 5px;
   width: 100%;
@@ -19,7 +55,7 @@
 .login-card {
   height: 100%;
   display: flex;
-  background: #ffffff;
+  background: var(--color-plain);
   border-radius: 6px;
   border: 1px solid #e5e7eb;
   box-shadow: 0 4px 6px -1px #0000000d, 0 2px 4px -1px #00000008;
@@ -31,6 +67,7 @@
   flex: 0.7;
   padding: 40px;
   display: flex;
+  background: var(--color-sub);
   flex-direction: column;
   justify-content: center;
 }
@@ -44,17 +81,17 @@
 }
 
 .mobile-logo-icon {
-  color:#111827d7 ;
+  color: var(--background-main) ;
 }
 
 .mobile-brand-header h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--background-main);
 }
 
 .mobile-brand-header span {
-  font-size: 11px;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #6b7280;
   text-transform: uppercase;
@@ -62,20 +99,21 @@
 }
 
 .form-header {
-  margin-bottom: 28px;
+  margin-bottom: 30px;
 }
 
 .form-header h2 {
-  font-size: 22px;
+  font-size: 2rem;
   font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 6px;
+  color:var(--text-main);
+  margin-bottom: 5px;
 }
 
 .form-header p {
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 16px;
+  color: var(--text-deepfaint);
   line-height: 1.5;
+  margin-bottom: 5px;
 }
 
 
@@ -92,18 +130,18 @@
 }
 
 .form-field label {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
-  color: #374151;
+  color: #555e6d
 }
 
 .form-field input {
   padding: 11px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 1px solid var(--text-faint);
+  border-radius: var(--radius-sm);
   font-size: 15px;
   font-family: inherit;
-  color: #111827;
+  color: var(--text-unmuted);
   background: #fff;
   transition: border-color 0.15s, box-shadow 0.15s;
   outline: none;
@@ -111,8 +149,8 @@
 }
 
 .form-field input:focus {
-  border-color: #111827d7;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  border-color: var(--text);
+  box-shadow: 0 0 0 1px var(--background-main);
 }
 
 
@@ -152,12 +190,12 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  color: #111827d7;
+  color: var(--text-muted);
 }
 
 .checkbox-label input {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   background-color: #111827d7;
   border: 1px solid #d1d5db;
   border-radius: 4px;
@@ -184,22 +222,24 @@
 
 .login-button {
   padding: 12px;
-  background: #111827d7;
-  color: white;
+  background:var(--background-main);
+  color: #ffffff;
   border: none;
   border-radius: 6px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  font-family: inherit;
+  font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
   margin-top: 6px;
   transition: color 0.1s;
 }
 
 .login-button:hover:not(:disabled) {
-  background: #111827d7;
+  background: var(--background-sub);
+  transform: skew(4px);
 }
 
+/* To be updated for bettee UX */
 .login-button:disabled {
   background: #9ca3af;
   cursor: not-allowed;
@@ -207,18 +247,19 @@
 
 .mobile-support-footer {
   display: none;
-  margin-top: 24px;
+  margin-top: 25px;
   border-top: 1px solid #f3f4f6;
   padding-top: 16px;
-  font-size: 12px;
+  font-size: 14px;
   color: #9ca3af;
   text-align: center;
+  margin-bottom: 25px;
 }
 
 
 .login-right {
   flex: 1;
-  background-color: #fafafa;
+  background: var(--color-sub);
   border-left: 1px solid #e5e7eb;
   padding: 40px;
   display: flex;
@@ -235,7 +276,7 @@
 .school-logo {
   width: 60px;
   height: 60px;
-  background: #111827d7;
+  background: var(--background-main);
   color: #ffffff;
   border-radius: 10px;
   display: flex;
@@ -247,7 +288,7 @@
 .school-logo-wrapper h2 {
   font-size: 22px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-main);
   letter-spacing: -0.5px;
 }
 
@@ -255,7 +296,7 @@
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  color: #111827d7;
+  color:var(--background-main);
   margin-top: 5px;
   letter-spacing: 0.5px;
 }
@@ -265,9 +306,9 @@
 }
 
 .description {
-  font-size: 15px;
+  font-size: 12.5px;
   text-align: justify;
-  color: #555e6d;
+  color: var(--text-faint);
   line-height: 1.6;
 }
 
@@ -332,7 +373,7 @@
 }
 
 .custom-progress {
-  background-color: #419de9 !important;
+  background-color: #50a2e5 !important;
 }
 .Toastify__toast-icon svg {
   fill: #419de9 !important;

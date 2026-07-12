@@ -87,7 +87,7 @@ export const createTeacher = async (req: Request, res: Response): Promise<void> 
     await newUser.save();
 
     const teacher = await Teacher.create({
-      userId: newUser._id,
+      ...(newUser ? { userId: newUser._id } : {}),
       firstName,
       lastName,
       email,
